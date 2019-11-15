@@ -1,0 +1,12 @@
+com\example\demoday3\Demoday3Application.class
+com\example\demoday3\ToDoRepository.class
+com\example\demoday3\TodoValidator.class
+com\example\demoday3\TodoController.class
+com\example\demoday3\GetHelloMapping.class
+com\example\demoday3\Event.class
+com\example\demoday3\ToDoStatus.class
+com\example\demoday3\ToDoDto.class
+com\example\demoday3\TodoSerialization.class
+com\example\demoday3\Todo$TodoBuilder.class
+com\example\demoday3\Todo.class
+com\example\demoday3\ToDoDto$ToDoDtoBuilder.class

@@ -1,0 +1,16 @@
+2019-11-13 16:00:25.826  INFO 14624 --- [main] c.e.demoday3.Demoday3ApplicationTests    : Starting Demoday3ApplicationTests on HRDC506-02 with PID 14624 (started by HRDC506-02 in D:\jisook\demoday3)
+2019-11-13 16:00:25.827  INFO 14624 --- [main] c.e.demoday3.Demoday3ApplicationTests    : The following profiles are active: prd
+2019-11-13 16:00:27.345  INFO 14624 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-11-13 16:00:27.638  INFO 14624 --- [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2019-11-13 16:00:27.639  INFO 14624 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-11-13 16:00:27.651  INFO 14624 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 12 ms
+2019-11-13 16:00:27.676  INFO 14624 --- [main] c.e.demoday3.Demoday3ApplicationTests    : Started Demoday3ApplicationTests in 2.414 seconds (JVM running for 3.294)
+2019-11-13 16:00:28.169  INFO 14624 --- [Thread-2] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-11-13 16:01:07.879  INFO 18992 --- [main] c.e.demoday3.Demoday3ApplicationTests    : Starting Demoday3ApplicationTests on HRDC506-02 with PID 18992 (started by HRDC506-02 in D:\jisook\demoday3)
+2019-11-13 16:01:07.880  INFO 18992 --- [main] c.e.demoday3.Demoday3ApplicationTests    : The following profiles are active: prd
+2019-11-13 16:01:09.345  INFO 18992 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-11-13 16:01:09.601  INFO 18992 --- [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2019-11-13 16:01:09.602  INFO 18992 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-11-13 16:01:09.614  INFO 18992 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 12 ms
+2019-11-13 16:01:09.633  INFO 18992 --- [main] c.e.demoday3.Demoday3ApplicationTests    : Started Demoday3ApplicationTests in 2.194 seconds (JVM running for 3.029)
+2019-11-13 16:01:09.934  INFO 18992 --- [Thread-2] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
