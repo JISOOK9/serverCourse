@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>과제_구지숙</title>
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="axios.min.js"></script>
+        <script>
+
+            function searchId() {
+                var inputId = $('#inputId').val();
+                //요청받으면 이 함수 호출
+                axios({
+                    method: 'get',
+                    params: {
+                        id: inputId
+                    },
+                    url: 'http://localhost:7001/user/searchId',
+                    responseType: 'json'
+                })
+                    .then(function (response) {
+                        $('#tbl_result').empty();
+                        var tmpArr = JSON.stringify(response.data);
+                        var arr = JSON.parse(tmpArr);
+                        $("#tbl_result").append(
+                            '<tr id="resultCnt">    \
+                            <td>count :' + arr.length +'</td> </tr>'
+
+                        );
+                        for (var i = 0; i < arr.length; i++) {
+                            showResult(JSON.stringify(arr[i]));
+                        }
+                    })
+                    .catch(function (error) {
+                        println('Error ->' + JSON.stringify(error))
+                    });
+
+            }
+
+            function searchName() {
+                var inputName = $('#inputName').val();
+
+                axios({
+                    method: 'get',
+                    params: {
+                        name: inputName
+                    },
+                    url: 'http://localhost:7001/user/searchName',
+                    responseType: 'json'
+                })
+                    .then(function (response) {
+                        $('#tbl_result').empty();
+                        //response는 json객체
+                        var tmpArr = JSON.stringify(response.data);
+                        var arr = JSON.parse(tmpArr);
+                        $("#tbl_result").append(
+                            '<tr id="resultCnt">    \
+                            <td>count :' + arr.length +'</td> </tr>'
+
+                        );
+                        for (var i = 0; i < arr.length; i++) {
+                            showResult(JSON.stringify(arr[i]));
+                        }
+                    })
+                    .catch(function (error) {
+                        println('Error ->' + JSON.stringify(error))
+                    });
+
+            }
+
+            function println(data) {
+                $('#results').append('<p>type is' + data + '</p>');
+            }
+
+            function showResult(data) {
+                var tmp = JSON.parse(data);
+                var name = tmp.name;
+                var age = tmp.age;
+                var mobile = tmp.mobile;
+                $("#tbl_result").append(
+                    '<tr><td><img src="userIcon.png" width="50%"></td>\
+                    <td>' +
+                    name + '</td><td>' + age + '</td></tr><tr><td></td><td>' + mobile +
+                    '</td></tr>'
+                );
+            }
+        </script>
+        <style>
+                *{
+                    margin:30;
+                    padding:30;
+                    box-sizing:border-box
+                }
+                
+                html, body {
+                    width:100%;
+                    height:100%;
+                }
+                #pageTitle{
+                    text-align:center;
+                    color:green
+                }
+
+                .tbl{
+                    width:50%;
+                    height:10%;
+                    margin:2em auto;
+                }
+    
+                .searchClass{
+                    height:50%;
+
+                }
+                .fieldClass{
+                    width:70%;
+                    text-align:center;
+                    border:2px solid darkolivegreen;
+                }
+                .btnClass{
+                    width:30%;
+                    text-align:center;
+                    border:2px solid darkolivegreen;
+                }
+                .itemClass{
+                    width:100%;
+                    height:100%;
+
+                }
+
+                #tbl_result{
+                    border : 2px solid black;
+                }
+
+            </style>
+    </head>
+    <body>
+        <h1 id="pageTitle">고객 조회</h1>
+        <table class="tbl">
+            <tr class="searchClass">
+                <td class="fieldClass">
+                    <input type="text" vale="" id="inputId" class="itemClass">
+                </td>
+                <td class="btnClass">
+                    <input type="button" value="id 조회" onclick="searchId()" class="itemClass">
+                </td>
+            </tr>
+            <tr class="searchClass">
+                <td class="fieldClass">
+                    <input type="text" vale="" id="inputName" class="itemClass">
+                </td>
+                <td class="btnClass">
+                    <input type="button" value="name 조회" id="nameSearch" onclick="searchName()"class="itemClass">
+                </td>
+            </tr>
+        </table>
+
+        <table class="tbl" id="tbl_result">
+            
+        </table>
+    </body>
+</html>

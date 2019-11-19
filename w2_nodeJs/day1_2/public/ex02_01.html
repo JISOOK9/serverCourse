@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ex02_01</title> 
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="axios.min.js"></script>
+        <script>
+            function show() {
+                //alert('show() function is called');
+                console.log('show() function is called');
+                var input1 = $('#input').val();
+                println(input1);
+//요청받으면 이 함수 호출
+                axios({
+                    method:'get',
+                    url:'http://localhost:8912/user/list',
+                    responseType:'json'
+                }).then(function(response){
+                    println('Response ->' + JSON.stringify(response.data))    
+                }).catch(function(error) {
+                    println('Error ->' + JSON.stringify(error))
+                });
+                
+            }
+
+            function println(data) {
+                $('#results').append('<p>'+data+'</p>');
+            }
+        </script>
+    </head>
+    <body>
+        <h1>ex02_01</h1>
+        <div>
+            <input type="text" value="" id="input">
+            <input type="button" value="OK" id="ok" onclick="show()">
+        </div>
+        <div id="results">
+            
+        </div>
+    </body>
+</html>
