@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title></title>
+        <script src="jquery-3.4.1.min.js"></script>
+
+        <script>
+            function show() {
+                console.log("show() function is called");
+                var id = $('#idInput').val();
+                var pw = $('#pwInput').val();
+
+                var url = '/user/list';
+                var form = $('<form></form>');   //form객체가 리턴됨?
+                form.attr('method', 'get');
+                form.attr('action', url);
+                form.append('body');
+                var idInput = $('<input type="hidden" value=' + id + ' name="id">');
+                var pwInput = $('<input type="hidden" value=' + pw + ' name="pw">');
+                form.append(idInput);
+                form.append(pwInput);
+                form.submit();  //form submit버튼 누른 효과
+            }
+
+
+        </script>
+    </head>
+    <body>
+        <h1>JS 이용해 FORM 요청</h1>
+        
+            <table>
+                <tr>
+                    <td>
+                        <label>ID</label>
+                    </td>
+                    <td>
+                        <input type="text" name="id" id="idInput">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>PASSWORD</label></td>
+                    <td><input type="password" name="password" id="pwInput"></td>
+                </tr>
+                <tr>
+                        <td><input value="ok" type="button" name="request" onclick="show()"></td>
+                    </tr>
+            </table>
+
+    </body>
+</html>

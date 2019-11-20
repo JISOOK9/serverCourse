@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title></title>
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="axios.min.js"></script>
+
+        <script>
+        function upload(){
+            var userId = $('#input1').val();
+            //이 문서 자체를 가르키는 js 내장객체
+            var uploadedImg = document.getElementById('input2').files[0];
+
+            var data = new FormData();
+            data.append('userId', userId);
+            data.append('photo', photo);
+
+            var config = {
+                onUploadProgress: function(event) {
+                    console.log('progress->' + event.loaded + ', ' + event.total);
+                }
+            }
+
+            axios.post(
+                '/upload',
+                data,
+                config
+            ).then(function(res){
+                console.log('Res -> ' + JSON.stringify(res.data))
+            }).catch(function(err) {
+                console.log('Err -> ' + err)
+            })
+        }
+        </script>
+    </head>
+    <body>
+        <h2>File Upload</h2>
+        <div>
+            <input type="text" id="input1">
+            <input type="file" id="input2">
+        </div>
+        <div>
+            <input type="button" value="Upload Image" onclick="upload()">
+        </div>
+        <div id="results">
+
+        </div>
+    </body>
+</html>

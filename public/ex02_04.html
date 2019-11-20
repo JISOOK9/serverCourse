@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title></title>
+        
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="axios.min.js"></script>
+
+        <script>
+        function show() {
+            console.log("show() function is called");
+            var id = $('#idInput').val();
+            var pw = $('#pwInput').val();
+            var params = '?id=' + id + '&password=' + pw;
+
+            //객체를 넣고 요청 방식 설정
+            axios({
+                method:'get',
+                url:'/user/list' + params,
+                responseType:'json'
+            }).then(function (response) {
+                println('Response -> ' + response.data);
+            }).catch(function(err){
+                println('Error -> ' + err);
+            });
+        }
+
+        function println(data){
+            $('#results').append('<p>' + data + '</p>');
+        }
+        </script>
+    </head>
+    <body>
+
+        <table>
+            <tr>
+                <td>
+                    <label>ID</label>
+                </td>
+                <td>
+                    <input type="text" name="id" id="idInput">
+                </td>
+            </tr>
+            <tr>
+                <td><label>PASSWORD</label></td>
+                <td><input type="password" name="password" id="pwInput"></td>
+            </tr>
+            <tr>
+                    <td><input value="ok" type="button" name="request" onclick="show()"></td>
+                </tr>
+        </table>
+        <div id="results"></div>
+    </body>
+</html>
