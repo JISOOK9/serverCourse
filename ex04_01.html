@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<script src="jquery-3.4.1.min.js"></script>
+<script src="axios.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <script>
+            let socket;
+            function connect() {
+                const host = $('#hostInput').val();
+                const port = $('#portInput').val();
+                const url = 'http://' + host + ':' + port;
+                const options = {
+                    forceNew: true
+                }
+                socket = io.connect(url, options);
+                //연결만들어지면 콜백함수 호출됨
+                socket.on('connect', () => {
+                    println('채팅서버 연결됨' + url);
+                })
+                //disconnect 라는 이름의 이벤트 등록
+                socket.on('disconnect', ()=>{
+                    println("채팅서버 연결 종료됨");
+                })
+
+                socket.on('respose', (input)=>{
+                    println(`서버로부터 응답 받음-> ${JSON.stringify(input)}`)
+                })
+            }
+
+            function login(){
+                println(`login() is called`)
+                const userId = $('#idInput');
+                const userPw = $('#pwInput');
+
+                if(socket) {
+                    const out = {
+                        id: userId,
+                        password: userPw
+                    }
+                    socket.emit('login', out);
+                }else{
+                    println("연결하기 버튼을 눌러 서버에 연결하세요");
+                }
+
+                //서버로 정보 보내기
+                socket.emit();
+            }
+            function println(data) {
+                $('#results').append('<p>' + data + '</p>');
+            }
+        </script>
+
+    </head>
+    <body>
+        <h1>채팅</h1>
+        <div>
+            <input type="text" value="localhost" id="hostInput">
+            <input type="text" value="8912" id="portInput">
+
+            <input type="button" value="연결하기" onclick="connect()">
+        </div>
+
+        <div>
+            <input type="text" value="testID" id="idInput">
+            <input type="password" value="testPw" id="pwInput">
+
+            <input type="button" value="login" onclick="login()">
+        </div>
+
+        <div id="results"></div>
+    </body>
+</html>
