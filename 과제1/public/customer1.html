@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Customer1</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                padding: 20px;
+            }
+            .searchDiv {
+                max-width: 400px;
+                padding: 3%;
+                display: block;
+                height: auto;
+                float: right;
+            }
+            .formDiv {
+                border: 1px solid lightgray;
+                margin: 10px;
+                padding: 10px;
+            }
+            table {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            .formDiv input {
+                margin: 0px 0px;
+                height: 100%;
+                width:100%;
+            }
+            h1, h2, h3 {
+                text-align: center;
+            }
+            table {
+                width: 100%;
+            }
+            tr, td {
+                margin-top: 20px;
+                width: auto;
+            }
+            td > p {
+                text-align: left;
+            }
+        </style>
+        <script src="./jquery-3.4.1.min.js"></script>
+        <script src="./axios.min.js"></script>
+        <script src="./fontawesome-all.js"></script>
+        <script>
+            function requestRead(url, cb) {
+                axios({
+                    metehod: 'get',
+                    url: url,
+                    responseType: 'json',
+                }).then((response) => {
+                    if (cb)
+                        cb(null, response.data)
+                }).catch((err) => {
+                    if (cb)
+                        cb(err, null)
+                })
+            }
+
+            function genItem(data) {
+                var root = $('<tr  style="border-bottom: 3px solid skyblue">')
+                var item = $('<td>').appendTo(root)
+                item.append($('<tr>')
+                     .append($('<td rowspan=2>').append($('<i class="far fa-user" style="width:20px;"></i>')))
+                     .append($('<td width=20>').append($('<p>').html(data.name)))
+                     .append($('<td width=30>').append($('<p>').html(data.age)))
+                )
+                item.append($('<tr>')
+                    .append($('<td colspan=2>')
+                        .append($('<p>').html(data.mobile)))
+                )
+
+                var tbody = $('#listBody')
+                tbody.append(root)
+            }
+
+            function fillList(data) {
+                $('#listBody').empty()
+                $('#countLabel').html('총 ' + data.length + '건')
+                console.log(data)
+                for (var i in data) {
+                    genItem(data[i])
+                }
+            }
+            function searchById() {
+                const id = $('#idText').val()
+                requestRead('http://localhost:7001/customer/read?id=' + id, (err, data) => {
+                    fillList(data.data)
+                })
+            }
+            function searchByName() {
+                const name = $('#nameText').val()
+                requestRead('http://localhost:7001/customer/read?name=' + name, (err, data) => {
+                    fillList(data.data)
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <div class="searchDiv">
+            <h2>고객 조회 화면</h2>
+            <div class="formDiv">
+                <div>
+                    <h3>고객 조회</h3>
+                    <table style="border: 1px solid lightgray;">
+                        <tbody>
+                            <tr>
+                                <td><input type="text" value="" id="idText"></td>
+                                <td><input type="button" value="아이디 조회" id="idButton" onclick="searchById()"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" value="" id="nameText"></td>
+                                <td><input type="button" value="이름 조회" id="nameButton" onclick="searchByName()"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding: 10px; border:1px solid lightgray">
+                    <p id="countLabel" style="float:right;"></p>
+                    <table style="border-collapse: collapse;">
+                        <tbody id="listBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
