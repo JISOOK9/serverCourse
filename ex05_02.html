@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        <script>
+            let socket;
+
+            function connect() {
+                const host = $('#hostInput').val();
+                const port = $('#portInput').val();
+                const url = 'http://' + host + ':' + port;
+                const options = {
+                    forceNew:true
+                }
+
+                socket = io.connect(url, options);
+                socket.on('connect', () => {
+                    println('채팅 서버 연결됨 -> ' + url);
+                })
+
+                socket.on('disconnect', () => {
+                    println('채팅 서버 연결 종료됨');
+                })
+
+                socket.on('response', (input) => {
+                    println('서버로부터 응답 받음 -> ' + JSON.stringify(input));
+                })
+
+                socket.on('message', (input) => {
+                    println('채팅 메시지 받음 -> ' + JSON.stringify(input));
+                })
+
+                socket.on('room-message', (input) => {
+                    println('채팅방 메시지 받음 -> ' + JSON.stringify(input));
+                })
+            }
+
+            function login() {
+                const userId = $('#idInput').val();
+                const userPassword = $('#passwordInput').val();
+
+                if (socket) {
+                    const output = {
+                        id: userId,
+                        password: userPassword
+                    }
+                    socket.emit('login', output);
+                } else {
+                    println('연결하기 버튼을 눌러 먼저 서버에 연결하세요.')
+                }
+            }
+
+            function send() {
+                const sender = $('#senderInput').val();
+                const receiver = $('#receiverInput').val();
+                const data = $('#dataInput').val();
+
+                const output = {
+                    command:'chat',
+                    sender:sender,
+                    receiver:receiver,
+                    data:data
+                }
+                socket.emit('message', output);
+
+            }
+
+
+            function roomJoin() {
+                const room = $('#roomInput').val();
+
+                const output = {
+                    room:room
+                }
+                socket.emit('room-join', output);
+            }
+
+            function roomLeave() {
+                const room = $('#roomInput').val();
+
+                const output = {
+                    room:room
+                }
+                socket.emit('room-leave', output);
+            }
+
+            function roomSend() {
+                const sender = $('#idInput').val();
+                const room = $('#roomInput').val();
+                const data = $('#roomDataInput').val();
+
+                const output = {
+                    sender:sender,
+                    room:room,
+                    data:data
+                }
+                socket.emit('room-message', output);
+            }
+
+
+            function println(data) {
+                $('#results').append('<p>' + data + '</p>');
+            }
+
+        </script>
+    
+    </head>
+    <body>
+
+        <h1>채팅</h1>
+
+        <div>
+            <input type="text" value="localhost" id="hostInput">
+            <input type="text" value="7001" id="portInput">
+            <input type="button" value="연결하기" onclick="connect()">
+        </div>
+
+        <div>
+            <input type="text" value="test01" id="idInput">
+            <input type="password" value="123456" id="passwordInput">
+            <input type="button" value="로그인" onclick="login()">
+        </div>
+
+        <div>
+            <input type="text" value="test01" id="senderInput">
+            <input type="text" value="test02" id="receiverInput">
+            <input type="text" value="안녕!" id="dataInput">
+            <input type="button" value="전송" onclick="send()">
+        </div>
+
+        <div>
+            <input type="text" value="tour" id="roomInput">
+        </div>
+        <div>
+            <input type="button" value="채팅방 들어가기" onclick="roomJoin()">
+            <input type="button" value="채팅방 나가기" onclick="roomLeave()">
+        </div>
+        <div>
+            <input type="text" value="안녕하세요!" id="roomDataInput">
+        </div>
+        <div>
+            <input type="button" value="채팅방에 전송" onclick="roomSend()">
+        </div>
+
+        <div id="results">
+
+        </div>
+
+    </body>
+</html>
